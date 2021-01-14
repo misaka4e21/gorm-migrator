@@ -4,12 +4,26 @@ import (
 	"strings"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/migrator"
 )
 
 // DB is the gorm.DB subtype for gorm-migrator.
 type DB struct {
 	gorm.DB
 	sqls []string
+}
+
+func (db *DB) Migrator() PgMigrator {
+	return PgMigrator{
+		Migrator: migrator.Migrator{
+			Config: migrator.Config{
+				CreateIndexAfterCreateTable: true,
+				DB:                          &db.DB,
+				Dialector:                   db.Dialector,
+			},
+		},
+		DB: db,
+	}
 }
 
 // Raw prevents CREATE, ALTER and DROP statements to be run, then records them.
