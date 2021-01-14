@@ -17,7 +17,7 @@ func GenerateMigrations(migrationName string, db *gorm.DB, values ...interface{}
 	}
 	filename := fmt.Sprintf("./migrations/%d_%s.up.sql", time.Now().UTC().Unix(), migrationName)
 	os.Mkdir("./migrations/", os.ModeDir)
-	f, err := os.OpenFile(filename, os.O_CREATE, os.ModePerm)
+	f, err := os.OpenFile(filename, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	if err != nil {
 		return err
 	}
