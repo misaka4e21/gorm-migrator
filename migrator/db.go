@@ -17,7 +17,7 @@ func (db *DB) Raw(sql string, values ...interface{}) (tx *DB) {
 	if strings.HasPrefix(sql, "CREATE") || strings.HasPrefix(sql, "ALTER") || strings.HasPrefix(sql, "DROP") {
 		db.sqls = append(db.sqls, sql)
 	} else {
-		db.DB = *db.DB.Raw(sql, values)
+		db.DB = *db.DB.Raw(sql, values...)
 	}
 	return db
 }
