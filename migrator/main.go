@@ -11,7 +11,7 @@ import (
 // GenerateMigrations writes migration files.
 func GenerateMigrations(migrationName string, db *gorm.DB, values ...interface{}) error {
 	mdb := NewMigratorDB(*db)
-	err := mdb.AutoMigrate(values)
+	err := mdb.AutoMigrate(values...)
 	if err != nil {
 		return err
 	}
